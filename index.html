@@ -130,10 +130,6 @@
 
     <div class="pricing-head">
       <p class="lead">Pick your program — beginner &amp; intermediate levels.</p>
-      <div class="currency" role="group" aria-label="Currency">
-        <button type="button" data-cur="eur" aria-pressed="true">€ EUR</button>
-        <button type="button" data-cur="usd" aria-pressed="false">$ USD</button>
-      </div>
     </div>
 
     <div class="pricing">
@@ -141,7 +137,7 @@
         <p class="plan-card__tag">Program 01</p>
         <h3>Strength Maxxing</h3>
         <p class="plan-card__sub">Get as strong as possible on the big lifts.</p>
-        <p class="plan-card__price" data-eur="39,99 €" data-usd="$45.99">39,99 €</p>
+        <p class="plan-card__price" data-eur="39,99 €" data-usd="$45.99" data-gbp="£34.99">39,99 €</p>
         <ul class="plan-card__list">
           <li>Beginner &amp; intermediate</li>
           <li>3× or 4× per week — your choice</li>
@@ -156,7 +152,7 @@
         <p class="plan-card__tag">Program 02</p>
         <h3>Strength + Speed</h3>
         <p class="plan-card__sub">Strength and explosiveness trained together.</p>
-        <p class="plan-card__price" data-eur="49,99 €" data-usd="$57.99">49,99 €</p>
+        <p class="plan-card__price" data-eur="49,99 €" data-usd="$57.99" data-gbp="£43.99">49,99 €</p>
         <ul class="plan-card__list">
           <li>Beginner &amp; intermediate</li>
           <li>Strength + speed, plyometrics &amp; power work</li>
@@ -264,22 +260,32 @@
 </footer>
 
 <script>
+/* Currency auto-detection: time zone first (most reliable without a server),
+   then the browser's language region. Defaults to EUR. */
 (function () {
-  var btns = document.querySelectorAll('.currency button');
-  function set(cur) {
-    document.querySelectorAll('.plan-card__price').forEach(function (el) { el.textContent = el.dataset[cur]; });
-    btns.forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.cur === cur); });
-    document.querySelectorAll('[data-buy]').forEach(function (a) {
-      var price = a.closest('.plan-card').querySelector('.plan-card__price').textContent;
-      a.href = 'https://wa.me/33615661920?text=' + encodeURIComponent("Hi! I want the " + a.dataset.buy + " program (" + price + ").");
-    });
-    try { localStorage.setItem('pp-cur', cur); } catch (e) {}
+  function detect() {
+    var tz = '';
+    try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
+    if (/^Europe\/(London|Belfast|Guernsey|Jersey|Isle_of_Man)$/.test(tz)) return 'gbp';
+    if (/^America\//.test(tz) || /^US\//.test(tz) || tz === 'Pacific/Honolulu') return 'usd';
+    if (tz) return 'eur';
+    var langs = navigator.languages || [navigator.language || ''];
+    for (var i = 0; i < langs.length; i++) {
+      var region = (langs[i].split('-')[1] || '').toUpperCase();
+      if (region === 'GB') return 'gbp';
+      if (region === 'US' || region === 'CA') return 'usd';
+      if (region) return 'eur';
+    }
+    return 'eur';
   }
-  btns.forEach(function (b) { b.addEventListener('click', function () { set(b.dataset.cur); }); });
-  var saved = null; try { saved = localStorage.getItem('pp-cur'); } catch (e) {}
-  var tz = ''; try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
-  var american = /^America\//.test(tz);
-  set(saved || (american ? 'usd' : 'eur'));
+  var cur = detect();
+  document.documentElement.dataset.currency = cur;
+  document.querySelectorAll('.plan-card').forEach(function (card) {
+    var price = card.querySelector('.plan-card__price');
+    price.textContent = price.dataset[cur];
+    var a = card.querySelector('[data-buy]');
+    a.href = 'https://wa.me/33615661920?text=' + encodeURIComponent('Hi! I want the ' + a.dataset.buy + ' program (' + price.textContent + ').');
+  });
 })();
 </script>
 </body>
