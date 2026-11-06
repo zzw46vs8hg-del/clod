@@ -1,14 +1,14 @@
-# PUSH — refonte du site
+# Peak Physique — site
 
-Refonte du site Shopify de Lachlan McPherson (programme PUSH 1.0), en HTML/CSS statique.
+Site one-page (HTML/CSS statique) pour Peak Physique, construit avec la DA des programmes PDF :
+bleu marine `#134D75`, bleu clair `#D7EAF8`, noir, blanc, typo Helvetica grasse en majuscules,
+bandeaux de chapitre numérotés « 01, 02… » et tableaux d'entraînement.
 
-- `index.html` : la page (héros, coach, athlètes, programme, offre, essai gratuit, avis, newsletter)
-- `styles.css` : tout le style. **La DA est définie en haut du fichier** (`:root`) : couleurs et polices
-- `assets/img/` : images reprises de la boutique
+- `index.html` : la page (héros, méthode, semaine d'essai, programme semaines 1–2, coaching, étapes, contact)
+- `styles.css` : le style ; les couleurs et la police sont en haut du fichier (`:root`)
+- `assets/img/` : logo sorcier en 3 versions (marine, noir, blanc)
+- `assets/pdf/peak-physique-trial-program.pdf` : le programme d'essai gratuit, téléchargeable depuis le site
 
-Pour changer la DA, modifie seulement les variables `--bg`, `--surface`, `--text`, `--muted`, `--accent`, `--on-accent`
-et les polices `--font-display` / `--font-body`.
-
-Les boutons d'achat pointent vers les fiches produits Shopify existantes.
+Tous les boutons de contact ouvrent WhatsApp (wa.me/33615661920). Instagram : @peak_physic.
 
 Aperçu local : ouvre `index.html` dans un navigateur.
