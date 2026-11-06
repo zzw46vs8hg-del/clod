@@ -21,7 +21,7 @@
   <nav class="nav__links" aria-label="Main">
     <a href="#method">Method</a>
     <a href="#trial">Free trial</a>
-    <a href="#program">Program</a>
+    <a href="#program">Programs</a>
     <a href="#coaching">Coaching</a>
   </nav>
   <a class="btn btn--sm" href="https://wa.me/33615661920" target="_blank" rel="noopener">Free call</a>
@@ -65,7 +65,7 @@
     <ol class="contents">
       <li><a href="#method"><b>01</b><span>The method</span></a></li>
       <li><a href="#trial"><b>02</b><span>Free trial week</span></a></li>
-      <li><a href="#program"><b>03</b><span>Week 1–2 program</span></a></li>
+      <li><a href="#program"><b>03</b><span>Programs</span></a></li>
       <li><a href="#coaching"><b>04</b><span>1:1 coaching</span></a></li>
       <li><a href="#how"><b>05</b><span>How it works</span></a></li>
       <li><a href="#contact"><b>06</b><span>Next step</span></a></li>
@@ -126,8 +126,49 @@
 
   <!-- 03 PROGRAM -->
   <section class="section" id="program">
-    <header class="chapter"><b>03</b><h2>Week 1–2 program</h2></header>
-    <p class="kicker kicker--dark">Upper / Lower × 2 + Assault Bike</p>
+    <header class="chapter"><b>03</b><h2>Programs</h2></header>
+
+    <div class="pricing-head">
+      <p class="lead">Pick your program — beginner &amp; intermediate levels.</p>
+      <div class="currency" role="group" aria-label="Currency">
+        <button type="button" data-cur="eur" aria-pressed="true">€ EUR</button>
+        <button type="button" data-cur="usd" aria-pressed="false">$ USD</button>
+      </div>
+    </div>
+
+    <div class="pricing">
+      <article class="plan-card">
+        <p class="plan-card__tag">Program 01</p>
+        <h3>Strength Maxxing</h3>
+        <p class="plan-card__sub">Get as strong as possible on the big lifts.</p>
+        <p class="plan-card__price" data-eur="39,99 €" data-usd="$45.99">39,99 €</p>
+        <ul class="plan-card__list">
+          <li>Beginner &amp; intermediate</li>
+          <li>3× or 4× per week — your choice</li>
+          <li>Strength focus: heavy compounds, cluster sets</li>
+          <li>Warm-up, sets, reps, load &amp; rest for every session</li>
+          <li>Free form check on WhatsApp</li>
+        </ul>
+        <a class="btn btn--ghost btn--block" data-buy="Strength Maxxing" href="https://wa.me/33615661920" target="_blank" rel="noopener">Get Strength Maxxing</a>
+      </article>
+
+      <article class="plan-card plan-card--featured">
+        <p class="plan-card__tag">Program 02</p>
+        <h3>Strength + Speed</h3>
+        <p class="plan-card__sub">Strength and explosiveness trained together.</p>
+        <p class="plan-card__price" data-eur="49,99 €" data-usd="$57.99">49,99 €</p>
+        <ul class="plan-card__list">
+          <li>Beginner &amp; intermediate</li>
+          <li>Strength + speed, plyometrics &amp; power work</li>
+          <li>Cluster sets, jumps, drop &amp; catch, sprints</li>
+          <li>Warm-up, sets, reps, load &amp; rest for every session</li>
+          <li>Free form check on WhatsApp</li>
+        </ul>
+        <a class="btn btn--light btn--block" data-buy="Strength + Speed" href="https://wa.me/33615661920" target="_blank" rel="noopener">Get Strength + Speed</a>
+      </article>
+    </div>
+
+    <p class="kicker kicker--dark sample-title">Inside a program — sample: Week 1–2 · Upper / Lower × 2 + Assault Bike</p>
     <div class="week">
       <div class="day is-upper"><span>Mon</span><b>Upper A</b><small>+ Assault Bike A</small></div>
       <div class="day is-lower"><span>Tue</span><b>Lower A</b></div>
@@ -169,7 +210,6 @@
         <div><dt>Cool-down</dt><dd>4–5 min easy</dd></div>
       </dl>
     </div>
-    <a class="btn" href="https://wa.me/33615661920" target="_blank" rel="noopener">Ask for the full program</a>
   </section>
 
   <!-- 04 COACHING -->
@@ -223,5 +263,24 @@
   <a href="https://www.instagram.com/peak_physic/" target="_blank" rel="noopener">@peak_physic</a>
 </footer>
 
+<script>
+(function () {
+  var btns = document.querySelectorAll('.currency button');
+  function set(cur) {
+    document.querySelectorAll('.plan-card__price').forEach(function (el) { el.textContent = el.dataset[cur]; });
+    btns.forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.cur === cur); });
+    document.querySelectorAll('[data-buy]').forEach(function (a) {
+      var price = a.closest('.plan-card').querySelector('.plan-card__price').textContent;
+      a.href = 'https://wa.me/33615661920?text=' + encodeURIComponent("Hi! I want the " + a.dataset.buy + " program (" + price + ").");
+    });
+    try { localStorage.setItem('pp-cur', cur); } catch (e) {}
+  }
+  btns.forEach(function (b) { b.addEventListener('click', function () { set(b.dataset.cur); }); });
+  var saved = null; try { saved = localStorage.getItem('pp-cur'); } catch (e) {}
+  var tz = ''; try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
+  var american = /^America\//.test(tz);
+  set(saved || (american ? 'usd' : 'eur'));
+})();
+</script>
 </body>
 </html>

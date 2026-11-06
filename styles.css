@@ -209,6 +209,28 @@ tbody tr:nth-child(even) { background: var(--paper-2); }
 .bike dd { margin: 0; font-weight: 600; font-size: 14px; }
 @media (max-width: 720px) { .bike dl { grid-template-columns: 1fr 1fr; } .bike dl > div { border-bottom: 1px solid var(--line); } }
 
+/* pricing */
+.pricing-head { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+.pricing-head .lead { margin: 0; }
+.currency { display: inline-flex; border: 2px solid var(--navy); border-radius: 10px; overflow: hidden; }
+.currency button { font: 800 13px/1 var(--font); letter-spacing: .06em; padding: 12px 18px; border: 0; background: #fff; color: var(--navy); cursor: pointer; }
+.currency button[aria-pressed="true"] { background: var(--navy); color: #fff; }
+.pricing { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 64px; }
+.plan-card { border: 1px solid var(--line); border-top: 5px solid var(--navy); padding: clamp(24px, 3vw, 36px); display: flex; flex-direction: column; background: #fff; }
+.plan-card__tag { margin: 0 0 14px; font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--navy); }
+.plan-card h3 { font-size: clamp(28px, 3.4vw, 40px); font-weight: 900; text-transform: uppercase; letter-spacing: -.02em; line-height: 1; margin-bottom: 10px; }
+.plan-card__sub { margin: 0 0 20px; color: var(--muted); }
+.plan-card__price { margin: 0 0 22px; font-size: clamp(44px, 5vw, 60px); font-weight: 900; letter-spacing: -.03em; line-height: 1; color: var(--navy); }
+.plan-card__list { margin-bottom: 28px; flex: 1; }
+.plan-card__list li { padding: 11px 0; border-top: 1px solid var(--line); font-weight: 600; font-size: 15px; }
+.plan-card__list li::before { content: "→ "; color: var(--navy); }
+.plan-card--featured { background: var(--navy); border-color: var(--navy); color: #fff; }
+.plan-card--featured h3, .plan-card--featured .plan-card__price, .plan-card--featured .plan-card__tag, .plan-card--featured .plan-card__list li::before { color: #fff; }
+.plan-card--featured .plan-card__sub { color: rgba(255,255,255,.75); }
+.plan-card--featured .plan-card__list li { border-color: rgba(255,255,255,.2); }
+.sample-title { margin-top: 0; }
+@media (max-width: 760px) { .pricing { grid-template-columns: 1fr; } }
+
 /* 04 coaching */
 .coaching { background: var(--navy); color: #fff; margin-top: clamp(64px, 9vw, 112px); padding: clamp(64px, 9vw, 112px) var(--gutter); }
 .coaching__inner { max-width: 860px; margin: 0 auto; }
